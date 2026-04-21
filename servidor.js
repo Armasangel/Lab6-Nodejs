@@ -13,7 +13,12 @@ const server = http.createServer(async (req, res) => {
 
   if (req.url === "/info") {
     res.writeHead(200, { "Content-Type": "application/json" }) //CORRECION BUG1
-    res.end("Ruta de información")
+    //PARTE 2
+    res.end(JSON.stringify({
+      mensaje: "Ruta de información del servidor",
+      curso: "Sistemas y Tecnologías Web",
+      tecnologia: "Node.js"
+     }))
     return
   }
 
@@ -22,6 +27,24 @@ const server = http.createServer(async (req, res) => {
     const texto = await fs.readFile(filePath, "utf-8") //CORRECCION BUG2
     res.writeHead(200, { "Content-Type": "application/json" })
     res.end(JSON.stringify(texto))
+    return
+  }
+
+  //Parte2: nueva ruta de saludo con texto plano
+  if (req.url === "/saludo"){
+    res.writeHead(200, {"Content-Type": "text/plain"})
+    res.end("HOLA!!! Bienvenido al servidor del lab6!!!")
+    return
+  }
+
+  //Parte2: nueva ruta con JSON de estado de la api
+  if (req.url === "/api/status"){
+    res.writeHead(200, {"content-type": "application/json"})
+    res.end(JSON.stringify({
+      ok: true,
+      status: "Servidor en funcionamiento",
+      puerto: PORT
+    }))
     return
   }
 
